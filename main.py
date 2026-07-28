@@ -5,14 +5,15 @@ from game import Game
 from agents import (
     RandomAgent,
     RuleAgent,
-    ObstructAgent
+    ObstructAgent,
+    EvolutionAgent
 )
 
 # ============================================
 # 実験設定
 # ============================================
 
-NUM_GAMES = 1000
+NUM_GAMES = 10000
 
 RANK_POINTS = {
     1: 10,
@@ -32,11 +33,11 @@ def create_players():
 
         RandomAgent("Alice"),
 
-        RandomAgent("Bob"),
-
         RuleAgent("Rachel"),
 
-        ObstructAgent("Oscar")
+        ObstructAgent("Oscar", show_evaluation=False),
+
+        EvolutionAgent("Emily")        
 
     ]
 
@@ -50,9 +51,9 @@ def main():
     # 集計用
     names = [
         "Alice",
-        "Bob",
         "Rachel",
-        "Oscar"
+        "Oscar",
+        "Emily"
     ]
 
     win_count = {
@@ -99,7 +100,7 @@ def main():
 
         win_count[ranking[0]] += 1
 
-        if (game_num + 1) % 100 == 0:
+        if (game_num + 1) % 1000 == 0:
 
             print(f"{game_num+1} games completed.")
 

@@ -1,0 +1,14 @@
+EvolutionAgent opponent-state version
+
+追加した公開情報:
+- 他エージェントの残り手札枚数
+- 他エージェントの累積パス回数
+- 安全に残っているパス回数 (3 - pass_count)
+- 次に手番が来る相手の同情報
+
+これらはカード固有の妨害度やルール品質との積として特徴量化されます。
+単独の状態値は全候補で同一になりsoftmax比較から消えるためです。
+
+実行:
+python train_evolution.py
+python evaluate_evolution.py

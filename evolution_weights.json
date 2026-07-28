@@ -1,0 +1,26 @@
+{
+  "weights": {
+    "bias": 2.494847020913463e-14,
+    "rule_quality": 3.879737426772042,
+    "obstruction_quality": 0.25122706303624964,
+    "short_chain": 1.257184844387943,
+    "pseudo_stair": 0.09710077975327537,
+    "far_from_seven": -2.624455666876443,
+    "same_suit_support": 1.635363616674344,
+    "finish_bonus": 1.048090471935908,
+    "pass_action": 1.9080595980988162,
+    "own_pass_pressure": -0.3,
+    "obstruction_x_lowest_hand_threat": 0.7185156795167871,
+    "rule_x_lowest_hand_threat": 1.0108665154496126,
+    "obstruction_x_mean_hand_threat": 0.3125679195044315,
+    "obstruction_x_next_hand_threat": 0.590094021821687,
+    "obstruction_x_highest_pass_pressure": 0.4945309603470208,
+    "obstruction_x_mean_pass_pressure": 0.3836984649166786,
+    "obstruction_x_next_pass_pressure": 0.7237174162344852,
+    "pass_x_lowest_hand_threat": 1.1898370707602288,
+    "pass_x_highest_pass_pressure": 0.6437934323844531
+  },
+  "reward_baseline": 0.2916986971642386,
+  "temperature": 0.15,
+  "games_learned": 120000
+}

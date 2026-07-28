@@ -29,6 +29,7 @@ class Game:
                 break
 
             player = self.players[self.current_player]
+            self.board.public_state = self.build_public_state(self.current_player)
             playable = self.board.get_playable_cards(player.hand)
             action = player.choose_action(
                 playable_cards=playable,
@@ -162,6 +163,49 @@ class Game:
 
         if len(self.ranking) != len(self.players):
             raise RuntimeError(f"順位決定に失敗しました: {self.ranking}")
+
+        self.notify_agents_game_end()
+
+    def build_public_state(self, current_index):
+        """エージェントへ渡す公開情報。手札の内容は含めない。"""
+        opponents = []
+        next_alive_index = self._next_alive_index(current_index)
+
+        for index, player in enumerate(self.players):
+            if index == current_index or player.eliminated:
+                continue
+            opponents.append({
+                "name": player.name,
+                "hand_size": player.hand_size(),
+                "pass_count": player.pass_count,
+                "safe_passes_remaining": max(0, 3 - player.pass_count),
+                "is_next": index == next_alive_index,
+            })
+
+        current = self.players[current_index]
+        return {
+            "current_player": current.name,
+            "current_index": current_index,
+            "own_hand_size": current.hand_size(),
+            "own_pass_count": current.pass_count,
+            "opponents": opponents,
+        }
+
+    def _next_alive_index(self, current_index):
+        for offset in range(1, len(self.players) + 1):
+            index = (current_index + offset) % len(self.players)
+            if not self.players[index].eliminated:
+                return index
+        return current_index
+
+    def notify_agents_game_end(self):
+        rewards = {1: 1.0, 2: 0.3, 3: -0.3, 4: -1.0}
+        for rank, player_name in enumerate(self.ranking, start=1):
+            player = next(p for p in self.players if p.name == player_name)
+            player.rank = rank
+            callback = getattr(player, "on_game_end", None)
+            if callable(callback):
+                callback(rank=rank, reward=rewards[rank])
 
     def card_text(self, card):
         suit, rank = card

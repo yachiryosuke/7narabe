@@ -1,16 +1,16 @@
 # visual_main.py
 
-from agents import RandomAgent, RuleAgent, ObstructAgent
+from agents import RandomAgent, RuleAgent, ObstructAgent, EvolutionAgent
 from game import Game
 from renderer import GameRenderer
 
 
 def main():
     players = [
-        RandomAgent("Random A"),
-        RandomAgent("Random B"),
+        RandomAgent("Random"),
         RuleAgent("Rule"),
         ObstructAgent("Obstruct"),
+        EvolutionAgent("Evo")
     ]
 
     renderer = GameRenderer()
